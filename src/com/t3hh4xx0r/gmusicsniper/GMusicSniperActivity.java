@@ -85,8 +85,13 @@ public class GMusicSniperActivity extends Activity {
 	public void makeAvailable() {
 		File f = new File(Constants.gMusicSniperDir);
 		if (!f.exists()) {
+			String message = "Directory not available";
+			makeToast(message);
 			f.mkdir();
-			makeAvailable();
+			f.mkdirs();
+			if (f.exists()) {
+				makeAvailable();
+			}
 		} else {
 			File dir = new File(Constants.gCacheDir);
 			String[] songNames = dir.list();
@@ -105,8 +110,13 @@ public class GMusicSniperActivity extends Activity {
 					e.printStackTrace();
 				}
 			}
+			File shitFile = new File(Constants.gMusicSniperDir + ".nomedia");
+			if (shitFile.exists()) {
+				shitFile.delete();
+			}
+			mWarningText.setText(R.string.finish);
+			mExecuteButton.setEnabled(false);
 		}
-		mWarningText.setText(R.string.finish);
 	}
 
 	private void copyFile(File sourceFile, File destFile)

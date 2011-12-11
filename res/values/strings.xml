@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">GMusic Sniper</string>
-    <string name="begin">Thais app will attempt to make your &quot;offline&quot; gMusic available to all music players.</string>
+    <string name="begin">This app will attempt to make your &quot;offline&quot; gMusic available to all music players.</string>
     <string name="check">Check for cached music.</string>
     <string name="execute">Make music available to stock music player.</string>
     <string name="warning">Warning, this is an intensive task. You may get an option to &quot;FC&quot; or &quot;Wait&quot;. This is normal, please choose wait and let the process finish.</string>
-    <string name="finish">Congratulations, your offline gMusic is now available to all music players. You will need to reboot or mount/unmount your sdcard for the media scanner to acknowledge the new tracks.</string>
+    <string name="finish">Congratulations, your offline gMusic is now available to all music players. You will need to reboot or unmount/mount your sdcard for the media scanner to acknowledge the new tracks.</string>
 
 </resources>
