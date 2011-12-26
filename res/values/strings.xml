@@ -5,6 +5,11 @@
     <string name="check">Check for cached music.</string>
     <string name="execute">Make music available to stock music player.</string>
     <string name="warning">Warning, this is an intensive task. You may get an option to &quot;FC&quot; or &quot;Wait&quot;. This is normal, please choose wait and let the process finish.</string>
-    <string name="finish">Congratulations, your offline gMusic is now available to all music players. You will need to reboot or unmount/mount your sdcard for the media scanner to acknowledge the new tracks.</string>
+    <string name="finish">Congratulations, your offline gMusic is now available to all music players. You will need to reboot or unmount/mount your sdcard for the media scanner to acknowledge the new tracks. For the ID3 tags to be located, root and busybox will be needed.</string>
+    <string name="busybox">Busybox has been found!</string>
+    <string name="no_busybox">Unfortunatly, busybox was not found installed on your device. ID3 tags will not be able to be retrieved.</string>
+    <string name="copy_db">Copy gMusic DB file.</string>
+    <string name="wrong_top">Whoops!</string>
+    <string name="wrong_status">Something went wrong. Try reloading the app.</string>
 
 </resources>
