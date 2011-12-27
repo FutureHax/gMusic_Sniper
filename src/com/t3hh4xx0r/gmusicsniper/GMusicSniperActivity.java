@@ -9,7 +9,6 @@ import java.nio.channels.FileChannel;
 
 import android.app.Activity;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Environment;
 import android.widget.Button;
@@ -212,23 +211,21 @@ public class GMusicSniperActivity extends Activity {
     private void getTrackName(String songFinal) {
     	int songFinalValue = Integer.parseInt(songFinal);
         DBAdapter db = new DBAdapter(this);
-        String message = String.valueOf(songFinalValue);
-        //makeToast(message);
         
         //---get a title---
         db.open();
         Cursor c = db.getTitle(songFinalValue);
-        if (c.moveToFirst())        
-            DisplayTitle(c);
-        else
-            Toast.makeText(this, "No title found", 
-            		Toast.LENGTH_LONG).show();
+        c.getString(0);
+        c.getString(1);
+        c.getString(2);
+        DisplayTitle(c);
         db.close();
 	}
 
     public void DisplayTitle(Cursor c) {
-    	String message = ("id: " + c.getString(0) + "\n" +
-    	        "TITLE: " + c.getString(12) + "\n");
+    	String message = ("TRACK: " + c.getString(0) + "\n" +
+    			"ARTIST: " + c.getString(1) + "\n" +
+    			"ALBUM: " + c.getString(2));
 		Toast.makeText(this,message,Toast.LENGTH_LONG).show();
     } 
     
