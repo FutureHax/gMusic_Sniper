@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+       <TextView
+       android:id="@+id/menu_header"
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
+       android:background="@drawable/dialog_full_holo_dark"
+       android:gravity="center|left"
+       android:text="   Menu"
+       android:textAppearance="?android:attr/textAppearanceLarge"
+       android:textColor="#33b5e5"
+       android:textStyle="bold|italic" />	
+       
+            <Button
+            android:id="@+id/copy_db_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/warning_text"
+            android:layout_alignParentLeft="true"
+            android:text="@string/copy_db" />
+            
+        <Button
+        android:id="@+id/execute_button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/copy_db_button"
+        android:layout_centerHorizontal="true"
+        android:text="@string/execute" />
+           
+            <Button
+        android:id="@+id/get_id3_button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/execute_button"
+        android:layout_centerHorizontal="true"
+        android:text="Get track info" />
+</LinearLayout>

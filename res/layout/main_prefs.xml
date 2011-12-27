@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+   <TextView
+       android:id="@+id/status_header"
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
+       android:background="@drawable/dialog_full_holo_dark"
+       android:gravity="center|left"
+       android:text="   Status"
+       android:textAppearance="?android:attr/textAppearanceLarge"
+       android:textColor="#33b5e5"
+       android:textStyle="bold|italic" />	    	
+
+  	<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+	    <TextView
+        android:id="@+id/sd_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="sd_status" />
+
+	    <ImageView
+	        android:id="@+id/sd_status_image"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+	        android:src="@drawable/btn_check_off_focused_holo_dark" />
+
+     </RelativeLayout>
+     
+  	<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+	    <TextView
+        android:id="@+id/copied_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="copied_status" />
+
+	    <ImageView
+	        android:id="@+id/copied_status_image"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+	        android:src="@drawable/btn_check_off_focused_holo_dark" />
+
+     </RelativeLayout>
+     
+   	<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+	    <TextView
+        android:id="@+id/cache_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="cache_status" />
+
+	    <ImageView
+	        android:id="@+id/cache_status_image"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+	        android:src="@drawable/btn_check_off_focused_holo_dark" />
+
+     </RelativeLayout>
+	    	    	    
+	<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+	    <TextView
+        android:id="@+id/bb_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_centerVertical="true"
+        android:text="bb_status"
+        android:layout_below="@+id/cache_status" />
+	    
+	    <ImageView
+	        android:id="@+id/bb_status_image"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+	        android:src="@drawable/btn_check_off_focused_holo_dark" />
+	</RelativeLayout>
+	    	    
+	<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+	    <TextView
+        android:id="@+id/db_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_centerVertical="true"       
+        android:text="db_status"
+        android:layout_below="@+id/bb_status" />
+	    
+	    <ImageView
+	        android:id="@+id/db_status_image"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+	        android:src="@drawable/btn_check_off_focused_holo_dark" />
+	 </RelativeLayout>
+	    	 	
+</LinearLayout>

@@ -11,6 +11,10 @@ public final class Constants {
 	public static String gCacheDir1 = extStorageDirectory + "/Android/data/com.google.android.music/cache/Music/";
 	
 	public static String gCacheDir2 = extStorageDirectory + "/Android/data/com.android.music/cache/music/";
+	
+	public static String gMusicDir1 = extStorageDirectory + "/Android/data/com.google.android.music/";
+
+	public static String gMusicDir2 = extStorageDirectory + "/Android/data/com.android.music/";
 
 	public static String gMusicSniperDir = extStorageDirectory + "/t3hh4xx0r/gMusicSniper/";
 	

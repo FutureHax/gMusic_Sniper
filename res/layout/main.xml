@@ -3,58 +3,22 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
-
-    <TextView
-        android:id="@+id/top_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:text="@string/begin"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-        
-    <Button
-        android:id="@+id/start_button"
+    <include
+        android:id="@+id/main_prefs"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="@string/check" />
-    
-    <TextView
-        android:id="@+id/status_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/start_button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="32dp"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/top_text"
+        android:layout_marginTop="16dp"
+        layout="@layout/main_prefs" />
 
-    <Button
-        android:id="@+id/execute_button"
+    <include
+        android:id="@+id/menu_prefs"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/start_button"
-        android:layout_centerHorizontal="true"
-        android:text="@string/execute"
-        android:visibility="invisible" />
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/main_prefs"
+        android:layout_marginTop="20dp"
+        layout="@layout/menu_prefs" />
 
-        <Button
-        android:id="@+id/copy_db_button"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/execute_button"
-        android:layout_centerHorizontal="true"
-        android:text="@string/copy_db"
-        android:visibility="visible" />
-
-    <TextView
-        android:id="@+id/warning_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="@string/warning"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:visibility="invisible" />
 </RelativeLayout>
