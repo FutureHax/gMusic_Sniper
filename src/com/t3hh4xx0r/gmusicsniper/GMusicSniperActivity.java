@@ -77,7 +77,6 @@ public class GMusicSniperActivity extends Activity {
 			makeToast(message);
 			f.mkdir();
 			f.mkdirs();
-			restart();
 		}
     	checkCache();
     	checkBB();
