@@ -7,7 +7,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 
+import org.blinkenlights.jid3.ID3Exception;
+import org.blinkenlights.jid3.MP3File;
+import org.blinkenlights.jid3.MediaFile;
+import org.blinkenlights.jid3.v2.ID3V2_3_0Tag;
+
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -93,7 +100,6 @@ public class GMusicSniperActivity extends Activity {
     private OnClickListener mCopyDBButtonListener = new OnClickListener() {
 		public void onClick(View v) {
 			copyDB();
-			restart();
 		}
     };
     
@@ -125,6 +131,7 @@ public class GMusicSniperActivity extends Activity {
 			mCacheStatusImage.setImageResource(R.drawable.btn_check_on_focused_holo_dark);
 		} else {
 			mCacheStatusText.setText("No Offline Music Found!");
+			mExecuteButton.setEnabled(false);
 		}
 	}
 	
@@ -213,6 +220,7 @@ public class GMusicSniperActivity extends Activity {
 		File DBFile = new File (Constants.gMusicSniperDir + Constants.musicDB);
 		if (!DBFile.exists()) {
 			mDBStatusText.setText("Database file not found!");
+        	mGetID3Button.setEnabled(false);
 		} else {
 			mDBStatusText.setText("Database file found!");
 			mDBStatusImage.setImageResource(R.drawable.btn_check_on_focused_holo_dark);
@@ -220,13 +228,35 @@ public class GMusicSniperActivity extends Activity {
 	}
 	
 	private void copyDB() {
-		String[] commands = {"busybox cp " + gMusicDBDir + Constants.musicDB + " " + Constants.gMusicSniperDir + Constants.musicDB + " \n"};
-		try {
-			RunAsRoot(commands);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-        }
+		AlertDialog alertDialog = new AlertDialog.Builder(GMusicSniperActivity.this).create();
+		alertDialog.setTitle("Sorry");
+
+		String BBWarning = "Your device is not rooted and/or does not have busybox installed. \n" +
+							"You will need to manually copy the music database. This can be done with any file manager. \n\n" +
+							"Please copy the file from \n" +
+							"\"/data/data/com.google.android.music/databases/music.db\" or\n"+
+							"\"/data/data/com.android.music/databases/music.db\" to\n" +
+							"\"/t3hh4xx0r/gMusicSniper/music.db\"\n" +
+							"and re launch the app.";
+		alertDialog.setMessage(BBWarning);
+		alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+		      public void onClick(DialogInterface dialog, int which) {
+		  		restart();
+		      } 
+		});
+		
+		if (mHasBB) {
+			String[] commands = {"busybox cp " + gMusicDBDir + Constants.musicDB + " " + Constants.gMusicSniperDir + Constants.musicDB + " \n"};
+			try {
+				RunAsRoot(commands);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			restart();
+		} else {
+			alertDialog.show();
+		}
 	}
 	
     public void RunAsRoot(String[] cmds) throws IOException{
@@ -258,7 +288,7 @@ public class GMusicSniperActivity extends Activity {
         mCacheStatusText.setText("Reboot before continuing!");
 	}
     
-    private void getTrackName(String songFinal) {
+    private void getTrackName(String songFinal) throws ID3Exception {
     	int songFinalValue = Integer.parseInt(songFinal);
         DBAdapter db = new DBAdapter(this);
         db.open();
@@ -276,15 +306,32 @@ public class GMusicSniperActivity extends Activity {
         db.close();
 	}
 
-    public void editTracks (Cursor c, String songFinal) throws IOException {
+    public void editTracks (Cursor c, String songFinal) throws IOException, ID3Exception{
     	File song = new File(Constants.gMusicSniperDir + "music/" + songFinal + ".mp3");
     	File output = new File(Constants.gMusicSniperDir + "music/" + c.getString(1) + "/" + c.getString(2) + "/" + c.getString(0) + ".mp3");
     	File outputDir = new File(Constants.gMusicSniperDir + "music/" + c.getString(1) + "/" + c.getString(2) + "/");
     	if (!outputDir.isDirectory()) {
     		outputDir.mkdirs();
     	}
+
+        // create an MP3File object representing our chosen file
+        MediaFile oMediaFile = new MP3File(song);
+
+        // create a v2.3.0 tag object, and set values using convenience methods
+        ID3V2_3_0Tag tag = new ID3V2_3_0Tag();
+        tag.setArtist(c.getString(1));  // sets TPE1 frame
+        tag.setAlbum(c.getString(2));  // sets TALB frame
+        tag.setTitle(c.getString(0));  // sets TIT2 frame
+
+        // set this v2.3.0 tag in the media file object
+        oMediaFile.setID3Tag(tag);
+       
+        // update the actual file to reflect the current state of our object 
+        oMediaFile.sync();
+        
     	copyFile(song, output);
     	song.delete();
+    	
     }
     
 	private void copyFile(File sourceFile, File destFile)
