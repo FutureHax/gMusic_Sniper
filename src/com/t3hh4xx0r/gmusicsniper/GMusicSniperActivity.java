@@ -19,8 +19,11 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View;
@@ -48,12 +51,11 @@ public class GMusicSniperActivity extends Activity {
 	String gMusic = null;
 	String gMusicDBDir = null;
 	String BBPath = null;
-
-
+	ProgressBar mProgressBar;
 	
     /** Called when the activity is first created. */
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
@@ -73,6 +75,7 @@ public class GMusicSniperActivity extends Activity {
         mCopyDBButton.setOnClickListener(mCopyDBButtonListener);
         mGetID3Button = (Button) findViewById(R.id.get_id3_button);
         mGetID3Button.setOnClickListener(mGetID3ButtonListener);
+        mProgressBar = (ProgressBar) findViewById(R.id.progressbar);
 
         setupViews();
     }
@@ -93,6 +96,7 @@ public class GMusicSniperActivity extends Activity {
     }
     private OnClickListener mExecuteButtonListener = new OnClickListener() {
 		public void onClick(View v) {
+    		mProgressBar.setVisibility(View.VISIBLE);
 			makeAvailable();
 		}
     };
@@ -105,6 +109,7 @@ public class GMusicSniperActivity extends Activity {
     
     private OnClickListener mGetID3ButtonListener = new OnClickListener() {
 		public void onClick(View v) {
+    		mProgressBar.setVisibility(View.VISIBLE);
 			getId3();
 		}
     };
@@ -158,39 +163,44 @@ public class GMusicSniperActivity extends Activity {
 		}
 	}
 		
+	final Handler mHandler = new Handler(){ 
+        public void handleMessage (Message  msg) {
+    		mProgressBar.setVisibility(View.INVISIBLE);
+        } 
+	}; 
+
 	public void makeAvailable() {
-		File f = new File(Constants.gMusicSniperDir + "music/");
-		if (!f.exists()) {
-			String message = "Creating directories.";
-			makeToast(message);
-			f.mkdir();
-			f.mkdirs();
-			if (f.exists()) {
-				makeAvailable();
-			}
-		} else {
-			File dir = new File(gMusic);
-			String[] songNames = dir.list();
-			File[] songs = dir.listFiles();
-			for (int i=0; i<songs.length; i++) {
-				File song = songs[i];
-				String songName = songNames[i];
-				String[] bits = songName.split("/");
-				String songStripped = bits[bits.length-1];
-				File output = new File(Constants.gMusicSniperDir + "music/" + songStripped);
-				try {
-					copyFile(song, output);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			File shitFile = new File(Constants.gMusicSniperDir + "music/" + ".nomedia");
-			if (shitFile.exists()) {
-				shitFile.delete();
+		
+		new Thread(new Runnable() {
+            public void run() {
+            	copyAll();
+                mHandler.sendEmptyMessage(0); 
+            }
+        }).start();
+        
+		File shitFile = new File(Constants.gMusicSniperDir + "music/" + ".nomedia");
+		if (shitFile.exists()) {
+			shitFile.delete();
+		}
+	}
+	
+	public void copyAll() {
+		File dir = new File(gMusic);
+		String[] songNames = dir.list();
+		File[] songs = dir.listFiles();
+		for (int i=0; i<songs.length; i++) {
+			File song = songs[i];
+			String songName = songNames[i];
+			String[] bits = songName.split("/");
+			String songStripped = bits[bits.length-1];
+			File output = new File(Constants.gMusicSniperDir + "music/" + songStripped);
+			try {
+				copyFile(song, output);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
-		restart();
 	}
 
 	private void checkBB() {
@@ -270,6 +280,7 @@ public class GMusicSniperActivity extends Activity {
     }
 	
     public void getId3() {
+
     	File dir = new File(Constants.gMusicSniperDir + "music/");
     	String[] songNames = dir.list();
     	File[] songs = dir.listFiles();
@@ -284,8 +295,10 @@ public class GMusicSniperActivity extends Activity {
     			}
     		}
     	}
+
         mCacheStatusImage.setImageResource(R.drawable.btn_check_off_focused_holo_dark);
         mCacheStatusText.setText("Reboot before continuing!");
+        mHandler.sendEmptyMessage(0); 
 	}
     
     private void getTrackName(String songFinal) throws ID3Exception {
