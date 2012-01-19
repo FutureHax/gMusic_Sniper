@@ -61,7 +61,16 @@ public class DBAdapter {
     //---retrieves a particular title---
     public Cursor getTitle(int songFinalValue) throws SQLException {
         Cursor mCursor =
-        		db.query(DATABASE_TABLE, new String [] {KEY_TITLE, KEY_ARTIST, KEY_ALBUM}, KEY_ROWID + " = \'" + songFinalValue + "\'", null, null, null, null);
+        		db.query(DATABASE_TABLE, new String [] {KEY_TITLE, KEY_ARTIST, KEY_ALBUM, "AlbumId"}, KEY_ROWID + " = \'" + songFinalValue + "\'", null, null, null, null);
+        if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+        return mCursor;
+    }
+    
+    public Cursor getArtwork(int id) throws SQLException {
+        Cursor mCursor =
+        		db.query("ARTWORK", new String [] {"LocalLocation"}, "AlbumId" + " = \'" + id + "\'", null, null, null, null);
         if (mCursor != null) {
             mCursor.moveToFirst();
         }

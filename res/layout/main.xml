@@ -1,33 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fillViewport="true"
+    android:padding="10px"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
-    <include
-        android:id="@+id/main_prefs"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/top_text"
-        android:layout_marginTop="16dp"
-        layout="@layout/main_prefs" />
+    android:layout_width="fill_parent">
 
-    <include
-        android:id="@+id/menu_prefs"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/main_prefs"
-        android:layout_marginTop="20dp"
-        layout="@layout/menu_prefs" />
-
-    <ProgressBar
-        android:id="@+id/progressbar"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:visibility="invisible" />
-
-</RelativeLayout>
+	<RelativeLayout
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical" >
+	    <include
+	        android:id="@+id/main_prefs"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_below="@+id/top_text"
+	        android:layout_marginTop="16dp"
+	  	    layout="@layout/main_prefs" />
+	
+	    <include
+	        android:id="@+id/menu_prefs"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_below="@+id/main_prefs"
+	        android:layout_marginTop="20dp"
+	        layout="@layout/menu_prefs" />
+	
+	    <ProgressBar
+	        android:id="@+id/progressbar"
+	        style="?android:attr/progressBarStyleLarge"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"	
+	        android:layout_centerHorizontal="true"
+	        android:layout_centerVertical="true"
+	        android:visibility="invisible" />
+	
+	</RelativeLayout>
+</ScrollView>

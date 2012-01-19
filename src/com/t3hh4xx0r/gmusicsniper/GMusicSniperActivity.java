@@ -10,6 +10,7 @@ import java.nio.channels.FileChannel;
 import org.blinkenlights.jid3.ID3Exception;
 import org.blinkenlights.jid3.MP3File;
 import org.blinkenlights.jid3.MediaFile;
+import org.blinkenlights.jid3.v2.APICID3V2Frame;
 import org.blinkenlights.jid3.v2.ID3V2_3_0Tag;
 
 import android.app.Activity;
@@ -52,6 +53,8 @@ public class GMusicSniperActivity extends Activity {
 	String gMusicDBDir = null;
 	String BBPath = null;
 	ProgressBar mProgressBar;
+    byte[] art;
+
 	
     /** Called when the activity is first created. */
     @Override
@@ -157,6 +160,7 @@ public class GMusicSniperActivity extends Activity {
 		if (contents != null && contents.length != 0) {
 			mCopiedStatusText.setText("Music Sniped!");
 			mCopiedStatusImage.setImageResource(R.drawable.btn_check_on_focused_holo_dark);
+        	mGetID3Button.setEnabled(true);
 		} else {
 			mCopiedStatusText.setText("No Music Sniped!");
         	mGetID3Button.setEnabled(false);
@@ -165,8 +169,23 @@ public class GMusicSniperActivity extends Activity {
 		
 	final Handler mHandler = new Handler(){ 
         public void handleMessage (Message  msg) {
-    		mProgressBar.setVisibility(View.INVISIBLE);
-        } 
+        	switch (msg.what) {
+        	case 0:
+        		mProgressBar.setVisibility(View.INVISIBLE);
+        		setupViews();
+        	break;
+        	
+        	case 1:
+        		mCacheStatusImage.setImageResource(R.drawable.btn_check_off_focused_holo_dark);
+        	    mCacheStatusText.setText("Reboot before continuing!");
+        		mProgressBar.setVisibility(View.INVISIBLE);
+        		setupViews();
+        	break;
+        	
+        	case 2:
+        		restart();
+        	}
+        }
 	}; 
 
 	public void makeAvailable() {
@@ -251,7 +270,7 @@ public class GMusicSniperActivity extends Activity {
 		alertDialog.setMessage(BBWarning);
 		alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
 		      public void onClick(DialogInterface dialog, int which) {
-		  		restart();
+		    	  mHandler.sendEmptyMessage(2); 
 		      } 
 		});
 		
@@ -263,7 +282,7 @@ public class GMusicSniperActivity extends Activity {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			restart();
+            mHandler.sendEmptyMessage(2); 
 		} else {
 			alertDialog.show();
 		}
@@ -280,6 +299,15 @@ public class GMusicSniperActivity extends Activity {
     }
 	
     public void getId3() {
+		new Thread(new Runnable() {
+            public void run() {
+            	getInfos();
+                mHandler.sendEmptyMessage(0); 
+            }
+        }).start();
+    }
+    
+    public void getInfos() {
 
     	File dir = new File(Constants.gMusicSniperDir + "music/");
     	String[] songNames = dir.list();
@@ -295,10 +323,6 @@ public class GMusicSniperActivity extends Activity {
     			}
     		}
     	}
-
-        mCacheStatusImage.setImageResource(R.drawable.btn_check_off_focused_holo_dark);
-        mCacheStatusText.setText("Reboot before continuing!");
-        mHandler.sendEmptyMessage(0); 
 	}
     
     private void getTrackName(String songFinal) throws ID3Exception {
@@ -310,6 +334,7 @@ public class GMusicSniperActivity extends Activity {
         c.getString(0);
         c.getString(1);
         c.getString(2);
+        c.getString(3);
         try {
 			editTracks(c, songFinal);
 		} catch (IOException e) {
@@ -317,9 +342,10 @@ public class GMusicSniperActivity extends Activity {
 			e.printStackTrace();
 		}
         db.close();
+        mHandler.sendEmptyMessage(1); 
 	}
 
-    public void editTracks (Cursor c, String songFinal) throws IOException, ID3Exception{
+    public void editTracks (Cursor c, String songFinal) throws IOException, ID3Exception {
     	File song = new File(Constants.gMusicSniperDir + "music/" + songFinal + ".mp3");
     	File output = new File(Constants.gMusicSniperDir + "music/" + c.getString(1) + "/" + c.getString(2) + "/" + c.getString(0) + ".mp3");
     	File outputDir = new File(Constants.gMusicSniperDir + "music/" + c.getString(1) + "/" + c.getString(2) + "/");
@@ -327,6 +353,17 @@ public class GMusicSniperActivity extends Activity {
     		outputDir.mkdirs();
     	}
 
+    	File file = new File(c.getString(3));
+
+    	byte[] b = new byte[(int) file.length()];
+    	try {
+    	FileInputStream fileInputStream = new FileInputStream(file);
+    	fileInputStream.read(b);
+    	}
+    	catch (IOException e1) {
+    	e1.printStackTrace();
+    	}
+    	
         // create an MP3File object representing our chosen file
         MediaFile oMediaFile = new MP3File(song);
 
@@ -335,7 +372,8 @@ public class GMusicSniperActivity extends Activity {
         tag.setArtist(c.getString(1));  // sets TPE1 frame
         tag.setAlbum(c.getString(2));  // sets TALB frame
         tag.setTitle(c.getString(0));  // sets TIT2 frame
-
+        APICID3V2Frame newFrontCover = new APICID3V2Frame("image/jpeg",APICID3V2Frame.PictureType.FrontCover,"Album Cover",b);
+        tag.addAPICFrame(newFrontCover);
         // set this v2.3.0 tag in the media file object
         oMediaFile.setID3Tag(tag);
        
