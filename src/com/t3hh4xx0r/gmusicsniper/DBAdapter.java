@@ -68,7 +68,7 @@ public class DBAdapter {
         return mCursor;
     }
     
-    public Cursor getArtwork(int id) throws SQLException {
+    public Cursor getArtwork(String id) throws SQLException {
         Cursor mCursor =
         		db.query("ARTWORK", new String [] {"LocalLocation"}, "AlbumId" + " = \'" + id + "\'", null, null, null, null);
         if (mCursor != null) {

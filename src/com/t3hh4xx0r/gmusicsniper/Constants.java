@@ -8,7 +8,9 @@ public final class Constants {
 	
 	public static File extStorageDirectory = Environment.getExternalStorageDirectory();
 	
-	public static String gCacheDir1 = extStorageDirectory + "/Android/data/com.google.android.music/cache/Music/";
+	public static String gCacheDir1a = extStorageDirectory + "/Android/data/com.google.android.music/cache/Music/";
+
+	public static String gCacheDir1b = extStorageDirectory + "/Android/data/com.google.android.music/cache/music/";
 	
 	public static String gCacheDir2 = extStorageDirectory + "/Android/data/com.android.music/cache/music/";
 	
@@ -23,9 +25,5 @@ public final class Constants {
 	public static String gMusicDB2 = "/data/data/com.android.music/databases/";
 
 	public static String musicDB = "music.db";
-
-	public static String BBPath1 = "/system/bin/busybox";
-
-	public static String BBPath2 = "/system/xbin/busybox";
 
 }

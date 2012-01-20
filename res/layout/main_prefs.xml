@@ -88,28 +88,6 @@
     android:layout_height="wrap_content"
     android:orientation="vertical" >
 	    <TextView
-        android:id="@+id/bb_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:layout_centerVertical="true"
-        android:text="bb_status"
-        android:layout_below="@+id/cache_status" />
-	    
-	    <ImageView
-	        android:id="@+id/bb_status_image"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_alignParentRight="true"
-	        android:src="@drawable/btn_check_off_focused_holo_dark" />
-	</RelativeLayout>
-	    	    
-	<RelativeLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical" >
-	    <TextView
         android:id="@+id/db_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 
@@ -35,7 +36,9 @@ public class GMusicSniperActivity extends Activity {
 	Button mExecuteButton;
 	Button mCopyDBButton;
 	Button mGetID3Button;	
-	static boolean mUsesDir1 = false;
+	Button mCleanButton;	
+	static boolean mUsesDir1a = false;
+	static boolean mUsesDir1b = false;
 	static boolean mUsesDir2 = false;
 	static boolean mHasBB = false;
 	TextView mTopText;
@@ -48,10 +51,8 @@ public class GMusicSniperActivity extends Activity {
 	ImageView mCacheStatusImage;
 	ImageView mDBStatusImage;
 	ImageView mSDStatusImage;
-	ImageView mBBStatusImage;
 	String gMusic = null;
 	String gMusicDBDir = null;
-	String BBPath = null;
 	ProgressBar mProgressBar;
     byte[] art;
 
@@ -63,14 +64,12 @@ public class GMusicSniperActivity extends Activity {
         setContentView(R.layout.main);
         
         mCacheStatusText = (TextView) findViewById(R.id.cache_status);
-        mBBStatusText = (TextView) findViewById(R.id.bb_status);
         mDBStatusText = (TextView) findViewById(R.id.db_status);
         mCopiedStatusText = (TextView) findViewById(R.id.copied_status);
         mCopiedStatusImage = (ImageView) findViewById(R.id.copied_status_image);
         mSDStatusText = (TextView) findViewById(R.id.sd_status);
         mSDStatusImage = (ImageView) findViewById(R.id.sd_status_image);
         mCacheStatusImage = (ImageView) findViewById(R.id.cache_status_image);
-        mBBStatusImage = (ImageView) findViewById(R.id.bb_status_image);
         mDBStatusImage = (ImageView) findViewById(R.id.db_status_image);
         mExecuteButton = (Button) findViewById(R.id.execute_button);
         mExecuteButton.setOnClickListener (mExecuteButtonListener);
@@ -78,6 +77,8 @@ public class GMusicSniperActivity extends Activity {
         mCopyDBButton.setOnClickListener(mCopyDBButtonListener);
         mGetID3Button = (Button) findViewById(R.id.get_id3_button);
         mGetID3Button.setOnClickListener(mGetID3ButtonListener);
+        mCleanButton = (Button) findViewById(R.id.clean_button);
+        mCleanButton.setOnClickListener(mCleanButtonListener);
         mProgressBar = (ProgressBar) findViewById(R.id.progressbar);
 
         setupViews();
@@ -92,7 +93,6 @@ public class GMusicSniperActivity extends Activity {
 			f.mkdirs();
 		}
     	checkCache();
-    	checkBB();
     	checkDB();
     	checkCopied();
     	checkSD();
@@ -105,10 +105,16 @@ public class GMusicSniperActivity extends Activity {
     };
     
     private OnClickListener mCopyDBButtonListener = new OnClickListener() {
-		public void onClick(View v) {
-			copyDB();
-		}
-    };
+ 		public void onClick(View v) {
+ 			copyDB();
+ 		}
+     };
+     
+    private OnClickListener mCleanButtonListener = new OnClickListener() {
+ 		public void onClick(View v) {
+ 			cleanCache();
+ 		}
+     };
     
     private OnClickListener mGetID3ButtonListener = new OnClickListener() {
 		public void onClick(View v) {
@@ -122,24 +128,31 @@ public class GMusicSniperActivity extends Activity {
 	}
 	
 	private void checkCache() {
-		File f1 = new File(Constants.gCacheDir1);
+		File f1a = new File(Constants.gCacheDir1a);
+		File f1b = new File(Constants.gCacheDir1b);
 		File f2 = new File(Constants.gCacheDir2);
 		
-		if (f1.exists()) {
-			mUsesDir1 = true;
+		if (f1a.exists()) {
+			mUsesDir1a = true;
 			gMusicDBDir = (Constants.gMusicDB1);
-			gMusic = (Constants.gCacheDir1);
+			gMusic = (Constants.gCacheDir1a);
+		} else if (f1b.exists()) {
+			mUsesDir1b = true;
+			gMusicDBDir = (Constants.gMusicDB1);
+			gMusic = (Constants.gCacheDir1b);
 		} else if (f2.exists()) {
 			mUsesDir2 = true;
 			gMusicDBDir = (Constants.gMusicDB2);
 			gMusic = (Constants.gCacheDir2);
 		}
-		if (mUsesDir1 || mUsesDir2) {
+		
+		if (mUsesDir1a || mUsesDir1b || mUsesDir2) {
 			mCacheStatusText.setText("Offline Music Found!");
 			mCacheStatusImage.setImageResource(R.drawable.btn_check_on_focused_holo_dark);
 		} else {
 			mCacheStatusText.setText("No Offline Music Found!");
 			mExecuteButton.setEnabled(false);
+			mCleanButton.setEnabled(false);
 		}
 	}
 	
@@ -148,10 +161,22 @@ public class GMusicSniperActivity extends Activity {
         	mSDStatusText.setText("SD Not Available!");
         	mExecuteButton.setEnabled(false);
         	mCopyDBButton.setEnabled(false);
+        	mCleanButton.setEnabled(false);
         } else {
 			mSDStatusText.setText("SD Available!");
 			mSDStatusImage.setImageResource(R.drawable.btn_check_on_focused_holo_dark);
         }
+	}
+	
+	public void cleanCache() {
+		File dir = new File(gMusic);
+		File[] songs = dir.listFiles();
+		for (int i=0;songs.length>i;i++) {
+			File song = songs[i];
+			song.delete();
+		}
+		dir.delete();
+		restart();
 	}
 	
 	public void checkCopied() {
@@ -222,29 +247,6 @@ public class GMusicSniperActivity extends Activity {
 		}
 	}
 
-	private void checkBB() {
-		File BB1 = new File(Constants.BBPath1);
-		File BB2 = new File(Constants.BBPath2);
-		
-		if (BB1.exists()) {
-			BBPath = (Constants.BBPath1);
-			mHasBB = true;
-		} else if (BB2.exists()) {
-			BBPath = (Constants.BBPath2);
-			mHasBB = true;
-		} else {
-			mHasBB = false;
-		}
-
-		if (mHasBB) {
-			mBBStatusText.setText("Busybox found at " + BBPath);
-			mBBStatusImage.setImageResource(R.drawable.btn_check_on_focused_holo_dark);
-
-		} else {
-			mBBStatusText.setText("Busybox not found!");
-		}
-	}
-
 	private void checkDB() {
 		File DBFile = new File (Constants.gMusicSniperDir + Constants.musicDB);
 		if (!DBFile.exists()) {
@@ -260,32 +262,21 @@ public class GMusicSniperActivity extends Activity {
 		AlertDialog alertDialog = new AlertDialog.Builder(GMusicSniperActivity.this).create();
 		alertDialog.setTitle("Sorry");
 
-		String BBWarning = "Your device is not rooted and/or does not have busybox installed. \n" +
-							"You will need to manually copy the music database. This can be done with any file manager. \n\n" +
-							"Please copy the file from \n" +
-							"\"/data/data/com.google.android.music/databases/music.db\" or\n"+
-							"\"/data/data/com.android.music/databases/music.db\" to\n" +
-							"\"/t3hh4xx0r/gMusicSniper/music.db\"\n" +
-							"and re launch the app.";
-		alertDialog.setMessage(BBWarning);
+		String RootWarning = "Your device may not be rooted. Root is currently required for this app to function";
+		alertDialog.setMessage(RootWarning);
 		alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
 		      public void onClick(DialogInterface dialog, int which) {
 		    	  mHandler.sendEmptyMessage(2); 
 		      } 
 		});
 		
-		if (mHasBB) {
-			String[] commands = {"busybox cp " + gMusicDBDir + Constants.musicDB + " " + Constants.gMusicSniperDir + Constants.musicDB + " \n"};
-			try {
-				RunAsRoot(commands);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-            mHandler.sendEmptyMessage(2); 
-		} else {
+		String[] commands = {"cat " + gMusicDBDir + Constants.musicDB + " > " + Constants.gMusicSniperDir + Constants.musicDB + " \n"};
+		try {
+			RunAsRoot(commands);
+		} catch (IOException e) {
 			alertDialog.show();
 		}
+        mHandler.sendEmptyMessage(2); 
 	}
 	
     public void RunAsRoot(String[] cmds) throws IOException{
@@ -312,40 +303,29 @@ public class GMusicSniperActivity extends Activity {
     	File dir = new File(Constants.gMusicSniperDir + "music/");
     	String[] songNames = dir.list();
     	File[] songs = dir.listFiles();
+        DBAdapter db = new DBAdapter(this);
+        db.open();
     	for (int i=0; i<songs.length; i++) {
     		String songName = songNames[i];
     		if (songName.endsWith("mp3")) {
     			String songFinal = songName.substring(0, songName.lastIndexOf('.'));
     			try {
-    				getTrackName(songFinal);
+    		        Cursor c = db.getTitle(Integer.parseInt(songFinal));
+    				editTracks(c, songFinal, db);
+    		        c.close();
     			} catch (Exception e) {
     				e.printStackTrace();
     			}
     		}
     	}
-	}
-    
-    private void getTrackName(String songFinal) throws ID3Exception {
-    	int songFinalValue = Integer.parseInt(songFinal);
-        DBAdapter db = new DBAdapter(this);
-        db.open();
-        //---get a title---
-        Cursor c = db.getTitle(songFinalValue);
-        c.getString(0);
-        c.getString(1);
-        c.getString(2);
-        c.getString(3);
-        try {
-			editTracks(c, songFinal);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
         db.close();
         mHandler.sendEmptyMessage(1); 
 	}
 
-    public void editTracks (Cursor c, String songFinal) throws IOException, ID3Exception {
+    public void editTracks (Cursor c, String songFinal, DBAdapter db) throws IOException, ID3Exception {
+    	
+        Log.d("SNIPER", c.getString(0) + " " + c.getString(1) + " " + c.getString(2) + " " + c.getString(3));
+
     	File song = new File(Constants.gMusicSniperDir + "music/" + songFinal + ".mp3");
     	File output = new File(Constants.gMusicSniperDir + "music/" + c.getString(1) + "/" + c.getString(2) + "/" + c.getString(0) + ".mp3");
     	File outputDir = new File(Constants.gMusicSniperDir + "music/" + c.getString(1) + "/" + c.getString(2) + "/");
@@ -353,7 +333,9 @@ public class GMusicSniperActivity extends Activity {
     		outputDir.mkdirs();
     	}
 
-    	File file = new File(c.getString(3));
+    	Cursor a = db.getArtwork(c.getString(3));
+    	File file = new File(a.getString(0));
+    	a.close();
 
     	byte[] b = new byte[(int) file.length()];
     	try {
