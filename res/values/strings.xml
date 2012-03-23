@@ -1,15 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">GMusic Sniper</string>
-    <string name="welcome">Thank you for purchasing gMusic Sniper. \n This is a non root app, but some functions are easier if superuser and busybox are installed. For more information on root/rooting your devices, look your device up on RootzWiki or XDA.</string>
+    <string name="app_name">Cloud Music Sniper</string>
+    <string name="welcome">Thank you for purchasing Cloud Music Sniper. \n This is no longer a root only app! It should work on any device, any rom!</string>
     <string name="check">Check for cached music.</string>
-    <string name="execute">Copy cached gMusic</string>
-    <string name="warning">Warning, this is an intensive task. You may get an option to &quot;FC&quot; or &quot;Wait&quot;. This is normal, please choose wait and let the process finish.</string>
-    <string name="finish">Congratulations, your offline gMusic is now available to all music players. You may need to reboot or unmount/mount your sdcard for the media scanner to acknowledge the new tracks. For the ID3 tags to be located, root and busybox will be needed.</string>
-    <string name="busybox">Busybox has been found!</string>
-    <string name="no_busybox">Unfortunatly, busybox was not found installed on your device. ID3 tags will not be able to be retrieved.</string>
-    <string name="copy_db">Copy gMusic DB file.</string>
-    <string name="wrong_top">Whoops!</string>
-    <string name="wrong_status">Something went wrong. Try reloading the app.</string>
+    <string name="execute">Snipe all available tracks.</string>
 
 </resources>

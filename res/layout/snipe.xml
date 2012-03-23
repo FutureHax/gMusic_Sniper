@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/black"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/stop_b"
+        android:background="@drawable/pinstripe"
+        android:orientation="vertical" >
+        
+        <TextView
+            android:id="@+id/status_header"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/dialog_full_holo_dark"
+            android:gravity="center|left"
+            android:text="SNIPING!"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#33b5e5"
+            android:textStyle="bold|italic" />    
+                
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/album_i"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/btn_check_off_focused_holo_dark" />
+
+        <TextView
+            android:id="@+id/trackText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/status_header"
+            android:paddingLeft="15dip"
+            android:text="TITLE"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:paddingBottom="5dip"
+            android:textColor="#33b5e5"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:id="@+id/artist_t"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Failed to import artist name."
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/trackText"
+            android:paddingLeft="25dip"
+            android:paddingTop="10dip"
+            android:paddingBottom="5dip"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold" />        
+        <TextView
+            android:id="@+id/album_t"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Failed to import album name."
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/artist_t"
+            android:paddingLeft="35dip"
+            android:paddingTop="10dip"
+            android:paddingBottom="5dip"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/counter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:textColor="#33b5e5"
+            android:text="p"
+            android:layout_alignParentRight="true" />        
+    </RelativeLayout>
+    </LinearLayout>
+        <Button
+            android:id="@+id/stop_b"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:text="Stop Sniping" />        
+</RelativeLayout>

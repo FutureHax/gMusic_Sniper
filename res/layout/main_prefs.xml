@@ -38,28 +38,6 @@
 
      </RelativeLayout>
      
-  	<RelativeLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical" >
-	    <TextView
-        android:id="@+id/copied_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="copied_status" />
-
-	    <ImageView
-	        android:id="@+id/copied_status_image"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_alignParentRight="true"
-	        android:src="@drawable/btn_check_off_focused_holo_dark" />
-
-     </RelativeLayout>
-     
    	<RelativeLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
@@ -81,27 +59,54 @@
 	        android:src="@drawable/btn_check_off_focused_holo_dark" />
 
      </RelativeLayout>
-	    	    	    
+	    	 	
+  	<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+  	    <TextView
+        android:id="@+id/count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:paddingLeft="10dip"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="0" 
+        android:scrollHorizontally="true"
+        android:textColor="#33b5e5"
+        android:textStyle="bold|italic"/>
+     </RelativeLayout>
+     
 	<RelativeLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical" >
 	    <TextView
-        android:id="@+id/db_status"
+        android:id="@+id/path_pref"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:layout_centerVertical="true"       
-        android:text="db_status"
-        android:layout_below="@+id/bb_status" />
-	    
-	    <ImageView
-	        android:id="@+id/db_status_image"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_alignParentRight="true"
-	        android:src="@drawable/btn_check_off_focused_holo_dark" />
-	 </RelativeLayout>
-	    	 	
+        android:text="Output Directory"/>
+     </RelativeLayout>
+     
+  	<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+  	    <TextView
+        android:id="@+id/path"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:paddingLeft="10dip"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="path literal" 
+        android:scrollHorizontally="true"
+        android:textColor="#33b5e5"
+        android:textStyle="bold|italic"/>
+     </RelativeLayout>
 </LinearLayout>

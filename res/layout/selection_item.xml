@@ -1,0 +1,63 @@
+ <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/linearLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp" >
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="238dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.42"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/file"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+	            android:scrollHorizontally="true"
+				android:text="poop"
+                android:textAppearance="@android:style/TextAppearance.Medium" />
+            
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+	            android:scrollHorizontally="true"
+				android:text="poop"
+                android:textAppearance="@android:style/TextAppearance.Small" />
+
+            <TextView
+                android:id="@+id/artist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+	            android:scrollHorizontally="true"
+				android:text="poop"
+                android:textAppearance="@android:style/TextAppearance.Small" />
+            
+            <TextView
+                android:id="@+id/album"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+	            android:scrollHorizontally="true"
+				android:text="poop"
+                android:textAppearance="@android:style/TextAppearance.Small" />
+        
+		</LinearLayout>
+
+        <ImageView
+            android:id="@+id/status_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="33dp"
+            android:layout_toRightOf="@+id/linearLayout2"
+            android:src="@drawable/btn_check_off_focused_holo_dark" />
+        
+    </RelativeLayout>

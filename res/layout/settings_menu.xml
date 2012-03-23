@@ -1,0 +1,31 @@
+<PreferenceScreen
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:title="Settings"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+    <PreferenceCategory
+    	android:title="Import Settings" >
+    		<CheckBoxPreference
+               	android:key="delete"
+               	android:title="Delete cache after Sniping"
+				android:summaryOn="Cached gMusic will be deleted after being Sniped."
+				android:summaryOff="Cached gMusic will not be deleted. Warning, this will cause two copies of your music to e stored on your SD.">
+            </CheckBoxPreference>
+	    </PreferenceCategory>      
+    <PreferenceCategory
+    	android:title="Notification Settings" >	
+    		<CheckBoxPreference
+               	android:key="show"
+               	android:title="Display ongoing notification"
+				android:summaryOn="Notification will be shown."
+				android:summaryOff="No notification will be shown.">
+            </CheckBoxPreference>
+    		<CheckBoxPreference
+               	android:key="showart"
+				android:dependency="show"
+               	android:title="Display artwork in notification"
+				android:summaryOn="Requires more memory."
+				android:summaryOff="Will not show artwork.">
+            </CheckBoxPreference>	    
+            </PreferenceCategory>      
+</PreferenceScreen>

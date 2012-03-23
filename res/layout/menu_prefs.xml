@@ -13,39 +13,17 @@
        android:text="   Menu"
        android:textAppearance="?android:attr/textAppearanceLarge"
        android:textColor="#33b5e5"
-       android:textStyle="bold|italic" />	
-       
+       android:textStyle="bold|italic" />
+
+        <Button
+            android:id="@+id/select_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select tracks to Snipe." />
+
        <Button
-        android:id="@+id/copy_db_button"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/warning_text"
-        android:layout_alignParentLeft="true"
-        android:text="@string/copy_db" />
-            
-        <Button
-        android:id="@+id/execute_button"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/copy_db_button"
-        android:layout_centerHorizontal="true"
-        android:text="@string/execute" />
-           
-        <Button
-        android:id="@+id/get_id3_button"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/execute_button"
-        android:layout_centerHorizontal="true"
-        android:text="Get track info" />
-        
-        <Button
-        android:id="@+id/clean_button"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/get_id3_button"
-        android:layout_centerHorizontal="true"
-        android:text="Clean gMusic cache" />
-        
-        
+        	android:id="@+id/all_button"
+        	android:layout_width="fill_parent"
+        	android:layout_height="wrap_content"
+        	android:text="@string/execute" />
 </LinearLayout>
