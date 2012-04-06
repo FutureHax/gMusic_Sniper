@@ -34,6 +34,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -108,6 +109,7 @@ public class UIActivity extends Activity {
     public static ArrayList<String> albums;
     public static ArrayList<String> artists;
     public static ArrayList<Bitmap> artwork;
+    public static ArrayList<Boolean> hasArt;
     
     RelativeLayout Snipe;
     LinearLayout Menu;
@@ -123,6 +125,11 @@ public class UIActivity extends Activity {
     public void onCreate(Bundle savedInstanceState)  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        try {
+ 			new SimpleEula(this).show();
+ 		} catch (IOException e1) {
+ 			e1.printStackTrace();
+ 		} 
         mNotificationManager = (NotificationManager) getApplicationContext().getSystemService(
                 getApplicationContext().NOTIFICATION_SERVICE);	
         if (showing) {
@@ -168,6 +175,7 @@ public class UIActivity extends Activity {
         titles = new ArrayList<String>();
         albums = new ArrayList<String>();
         artwork = new ArrayList<Bitmap>();
+        hasArt = new ArrayList<Boolean>();
  
         Snipe = (RelativeLayout) findViewById(R.id.snipe);
         Menu = (LinearLayout) findViewById(R.id.menu_prefs);
@@ -320,8 +328,8 @@ public class UIActivity extends Activity {
 			       
 		private Bitmap decodeBitmap(String f){
 			File file = new File(f);
-		    Bitmap b = null;
-		    try {
+			Bitmap b = null;		    
+			try {
 		        //Decode image size
 		        BitmapFactory.Options o = new BitmapFactory.Options();
 		        o.inJustDecodeBounds = true;
@@ -339,7 +347,7 @@ public class UIActivity extends Activity {
 		        //Decode with inSampleSize
 		        BitmapFactory.Options o2 = new BitmapFactory.Options();
 		        o2.inSampleSize = scale;
-		        o2.inPurgeable=true;
+		        o2.inPurgeable = true;
 		        fis = new FileInputStream(file);
 		        b = BitmapFactory.decodeStream(fis, null, o2);
 		        fis.close();
@@ -349,7 +357,7 @@ public class UIActivity extends Activity {
 		}
 		
 		protected void onProgressUpdate(String... track) {			
-	        current++;
+	        current++;	
 			if (mProgressBar.isShown() && running) {
 	    		mProgressBar.setVisibility(View.GONE);
 			}
@@ -475,7 +483,6 @@ public class UIActivity extends Activity {
 	   			}
 
 	    		for (int i=0; i<ids.length; i++) {
-	    			Log.d("SNIPE", Integer.toString(i));
 	    			if (running) {
 	    				String _id = ids[i].replace(".mp3", "");
 	    				c = cR.query(Uri.parse(URI.uri), fields, "_id = "+_id, null, null);
@@ -499,7 +506,7 @@ public class UIActivity extends Activity {
 		        composer = c.getString(4);
 		        _data = c.getString(5);
 		        track = c.getString(6);
-		        title = c.getString(7);
+		        title = c.getString(7).replaceAll("[^a-zA-Z0-9 ]+",".");
 		        genre = c.getString(8);
 		        year = c.getString(9);
 		        size = c.getString(10);
@@ -526,10 +533,13 @@ public class UIActivity extends Activity {
 		       		File file = null;
 		       		if (art1.exists()) {
 		       			file = art1;
+		       			hasArt.add(true);
 		       		} else if (art2.exists()) {
 		       			file = art2;
+		       			hasArt.add(true);
 		       		} else {
 		       			file = art3;
+		       			hasArt.add(false);		       			
 		       		}
 		        	byte[] b = new byte[(int) file.length()];
 		        	try {
@@ -642,7 +652,6 @@ public class UIActivity extends Activity {
             throws IOException {
 
 		if (sourceFile.toString().endsWith("mp3")) {
-			Log.d("SNIPE", sourceFile+":"+destFile);
 			    InputStream in = new FileInputStream(sourceFile);
 			    OutputStream out = new FileOutputStream(destFile);
 
@@ -693,6 +702,25 @@ public class UIActivity extends Activity {
         case R.id.restart:
         	restart();
         break;
+        case R.id.apps:		           	
+      		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+      		builder.setTitle("View more apps")
+      		   .setMessage("View more apps from the developer")
+      		   .setCancelable(true)
+      		   .setPositiveButton("Lets do it!", new DialogInterface.OnClickListener() {
+      		       public void onClick(DialogInterface dialog, int id) {
+      					Intent marketApp = new Intent(Intent.ACTION_VIEW, Uri.parse("market://search?q=r2doesinc&c=apps"));
+      					marketApp.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+      		 			try{
+      						startActivity(marketApp);
+      					}catch(Exception e){
+      						e.printStackTrace();
+      					}        	 
+      		       }
+      		   });
+      		AlertDialog alert = builder.create();
+      		alert.show();
+        break;        
         case R.id.chooser:        
         Intent fi = new Intent(this, FileExplore.class);
         fi.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

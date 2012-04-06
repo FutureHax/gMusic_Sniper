@@ -10,4 +10,6 @@
           android:icon="@drawable/chooser"
           android:title="File Chooser"
           android:showAsAction="ifRoom" />    
+   <item android:id="@+id/apps"
+          android:title="View more apps" />    
 </menu>

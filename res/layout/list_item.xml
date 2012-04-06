@@ -9,7 +9,7 @@
 
      <ImageView
          android:id="@+id/art"
-         android:layout_width="wrap_content"
+         android:layout_width="20dp"
          android:layout_height="wrap_content"
          android:layout_weight="1.42"
          android:src="@drawable/ic_launcher" />
@@ -47,6 +47,13 @@
 			android:text="poop"
                 android:textAppearance="@android:style/TextAppearance.Small" />
         
+            <TextView
+                android:id="@+id/sponsor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Click to check for external artwork."
+                android:textColor="#33b5e5" 
+                android:visibility="gone"/>
 		</LinearLayout>
-        
+
     </LinearLayout>

@@ -4,5 +4,6 @@
     <string name="welcome">Thank you for purchasing Cloud Music Sniper. \n This is no longer a root only app! It should work on any device, any rom!</string>
     <string name="check">Check for cached music.</string>
     <string name="execute">Snipe all available tracks.</string>
-
+    <string name="updates">-Slight file picker update\n\n-Smoother artwork lookup\n\n-Minor UI enhancements.\n\n-Tweaked memory usage for better proformance (less FCs)\n\n-Fix for skipping tracks with special characters in their names.</string>
+    
 </resources>

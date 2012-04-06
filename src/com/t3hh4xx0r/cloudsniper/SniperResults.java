@@ -7,6 +7,7 @@ public class SniperResults {
 	 private String album = "unknown";
 	 private String artist = "unknown";
 	 private Bitmap art;
+	 private boolean hasart;
 
 	 public void setTitle(String title) {
 		  this.title = title;
@@ -15,6 +16,14 @@ public class SniperResults {
 		 public String getTitle() {
 		  return title;
 		 }
+		 
+		 public void setHasart(boolean hasart) {
+			  this.hasart = hasart;
+			 }
+
+			 public boolean getHasart() {
+			  return hasart;
+			 }
 
 		 public void setAlbum(String album) {
 			  this.album = album;

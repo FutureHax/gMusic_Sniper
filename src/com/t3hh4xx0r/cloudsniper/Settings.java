@@ -1,5 +1,7 @@
 package com.t3hh4xx0r.cloudsniper;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -47,7 +49,26 @@ public class Settings extends PreferenceActivity {
 	    if(preference == mShowArt){
             value = mShowArt.isChecked();
             if(value) {
-                Constants.showart = true;
+        		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Warning");
+        	    builder.setMessage("This is a memory intensive option. This may cause FCs on some devices.\nAre you sure you want to continue?")
+          		   .setCancelable(false)
+          		   .setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+          		       public void onClick(DialogInterface dialog, int id) {
+        	  				dialog.dismiss();
+        	                Constants.showart = true;
+        	                mShowArt.setChecked(true);
+          		       }
+          		   })          		   
+          		   .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+          		       public void onClick(DialogInterface dialog, int id) {
+        	  				dialog.dismiss();
+        	                Constants.showart = false;
+        	                mShowArt.setChecked(false);
+          		       }
+          		   });
+          		AlertDialog alert = builder.create();
+          		alert.show();
             } else {
                 Constants.showart = false;
             }

@@ -27,6 +27,6 @@ public final class Constants {
 
 	public static boolean show = true;
 
-	public static boolean showart = true;
+	public static boolean showart = false;
 
 }

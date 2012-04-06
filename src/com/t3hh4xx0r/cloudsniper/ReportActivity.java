@@ -38,6 +38,7 @@ public class ReportActivity extends Activity {
         	resultsArray.setTitle(UIActivity.titles.get(i));
         	resultsArray.setArtist(UIActivity.artists.get(i));
         	resultsArray.setArt(UIActivity.artwork.get(i));
+        	resultsArray.setHasart(UIActivity.hasArt.get(i));
     		new MediaScannerNotifier(ReportActivity.this, f);     		
         	results.add(resultsArray);        	
         }

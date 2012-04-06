@@ -27,7 +27,7 @@ public class FileExplore extends Activity {
 	private Boolean firstLvl = true;
 
 	private Item[] fileList;
-	private static File path = new File("/");
+	private static File path = new File("/mnt/");
 	private String chosenFile;
 	private static final int DIALOG_LOAD_FILE = 1000;
 
